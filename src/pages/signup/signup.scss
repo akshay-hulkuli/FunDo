@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Roboto:wght@400&family=Zen+Kaku+Gothic+New:wght@300&display=swap');
+$gothic : 'Zen Kaku Gothic New', sans-serif;
+$roboto:'Montserrat', sans-serif;
+@mixin layout($direction) {
+    display: flex;
+    flex-direction: $direction;
+}
+
+.main-content{
+    @include layout('row');
+    margin: 10vw 25vw;
+    border-radius: 8px;
+    border: 1px solid #dadce0;
+    justify-content: space-around;
+}
+
+.main-content-left {
+    padding: 2vw 0 2vw 2vw;
+    font-size: calc(6px + 0.8vw);
+    font-family: $gothic;
+    font-weight: normal;
+    width: 60%;
+}
+
+#fun{
+    color: rgb(158, 16, 16);
+    font-size: calc(10px + 1vw);
+}
+#do{
+    color: rgb(17, 142, 226);
+    font-size: calc(10px + 1vw);
+}
+
+.main-content-left-header{
+    font-family: $gothic;
+    font-size:calc(12px + 1vw);
+    font-weight: normal;
+    text-transform: capitalize;
+}
+
+.name{
+    display: flex;
+    margin: 2.4vw 0 1.5vw 0;
+}
+
+.p{
+    color: #1a73e8;
+    margin: 0.5vw 0;
+}
+
+.psw {
+    display: flex;
+    margin: 2vw 0 0 0;
+}
+
+.pswhelper{
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.6);
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 400;
+    margin: 0 0 0 15px;
+}
+
+.check{
+    font-family: "Roboto";
+    font-weight: 400;
+    margin: 0.5vw 0;
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    margin: 3vw 0 2vw 0;
+}
+.main-content-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-family: $roboto;
+    font-size: 16px;
+    font-weight: bolder;
+    width: 40%;
+}
+
+.main-content-right > img {
+    margin: 0 auto;
+}   
+
+
+@media only screen and (max-width: 1200px) {
+    .main-content-right{
+        display:none;
+    }
+    .main-content{
+        margin: 10vw;
+    }
+}
+
+@media only screen and (max-width:800px) {
+    .main-content-left{
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .main-content{
+        margin: 0;
+    }
+}
+
+@media only screen and (max-width:350px) {
+    .psw{
+        flex-direction: column;
+    }
+    .name{
+        flex-direction: column;
+    }
+}
