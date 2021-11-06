@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Roboto:wght@400&family=Zen+Kaku+Gothic+New:wght@300&display=swap');
+$gothic : 'Zen Kaku Gothic New', sans-serif;
+$roboto:'Montserrat', sans-serif;
+
+.reset-container{
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    border: 1px solid #dadce0;
+    width: 400px;
+    margin: 10% auto;
+    padding: 48px 50px;
+    font-family: $gothic;
+}
+
+.logo{
+    font-size: 24px;
+    text-align: center;
+}
+
+.reset-header{
+    font-size: 28px;
+    text-align: center;
+    padding-top:10px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.reset-caption{
+    text-align: center;
+    font-size: 20px;
+    padding-top: 5px;
+}
+
+.reset-buttons{
+    display: flex;
+    justify-content: flex-end;
+    margin: 50px 0 40px 0;
+}
+
+@media only screen and (max-width: 570px) {
+    .reset-container{
+        width: auto;
+        margin: 5% 0;
+        border: none;
+        padding: 24px 25px;
+    }
+}
