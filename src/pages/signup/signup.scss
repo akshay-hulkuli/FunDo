@@ -110,10 +110,8 @@ $roboto:'Montserrat', sans-serif;
 @media only screen and (max-width: 450px) {
     .main-content{
         margin: 0;
+        border: none;
     }
-}
-
-@media only screen and (max-width:350px) {
     .psw{
         flex-direction: column;
     }

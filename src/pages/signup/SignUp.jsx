@@ -17,14 +17,14 @@ export default class SignUp extends Component {
                     <span class="main-content-left-header">create your fundo account</span>
                     <form id="form">
                         <div class="name">
-                            <TextField fullWidth label="first name" id="firstName" size="small" margin="dense" sx={{marginRight:"5px"}} />
-                            <TextField fullWidth label="last name" id="lastName" size="small" margin="dense" sx={{marginLeft:"5px"}}/>
+                            <TextField fullWidth label="first name" id="firstName" size="small" margin="dense" sx={{marginRight:'5px'}}/>
+                            <TextField fullWidth label="last name" id="lastName" size="small" margin="dense" sx={{marginLeft:'5px'}}/>
                         </div>
                         <TextField fullWidth label="user name"  id="fullWidth" size="small" margin="dense" helperText="you can use numbers,letters and periods" />
                         <div><p class="p">Use my current email address instead</p></div>
                         <div class="psw">
-                            <TextField fullWidth label="Password" id="psw" size="small" margin="dense" sx={{marginRight:"5px"}} />
-                            <TextField fullWidth label="Confirm" id="pswRepeat" size="small" margin="dense" sx={{marginLeft:"5px"}}/>
+                            <TextField fullWidth label="Password" id="psw" size="small" margin="dense" sx={{marginRight:'5px'}}/>
+                            <TextField fullWidth label="Confirm" id="pswRepeat" size="small" margin="dense" sx={{marginLeft:'5px'}}/>
                         </div>
                         <p class="pswhelper">Use 8 or more characters with a mix of letters, numbers & symbols</p>
                         <div class="check">
