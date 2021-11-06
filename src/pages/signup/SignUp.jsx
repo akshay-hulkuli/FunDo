@@ -9,7 +9,11 @@ export default class SignUp extends Component {
         return (
             <div class="main-content">
                 <div class="main-content-left">
-                    <span id="fun">Fun</span><span id="do">do</span><br/>
+                    <div class="logo"> 
+                        <span style={{color:'rgb(17, 142, 226)'}}>F</span><span style={{color:'rgb(234, 67, 53)'}}>u</span><span style={{color:'rgb(251, 188, 5)'}}>n</span>
+                        <span style={{color:'rgb(17, 142, 226)'}}>d</span><span style={{color:'rgb(234, 67, 53)'}}>o</span>
+                    </div>
+                    
                     <span class="main-content-left-header">create your fundo account</span>
                     <form id="form">
                         <div class="name">
