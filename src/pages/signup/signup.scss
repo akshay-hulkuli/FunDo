@@ -23,9 +23,12 @@ $roboto:'Montserrat', sans-serif;
     width: 60%;
 }
 
+.logo{
+    font-size: calc(10px + 1vw);
+}
+
 #fun{
     color: rgb(158, 16, 16);
-    font-size: calc(10px + 1vw);
 }
 #do{
     color: rgb(17, 142, 226);
