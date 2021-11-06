@@ -15,7 +15,7 @@ export class ForgetEmail extends Component {
                 <span class="forgot-email-caption">Enter your phone number or recovery email</span>
                 <form>
                     <TextField fullWidth label="Phone number or email" id="emailorPhone" size="medium" margin="dense" sx={{marginTop:'40px'}}/>
-                    <div class="signin-buttons">
+                    <div class="forgot-email-buttons">
                             <Button variant="contained" sx={{width:'80px'}}>Next</Button>
                     </div>
                 </form>
