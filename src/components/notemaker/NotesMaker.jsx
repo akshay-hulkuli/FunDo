@@ -2,14 +2,13 @@ import { Button, Collapse, IconButton, InputBase, Paper } from '@mui/material';
 import React from 'react';
 import Box from '@mui/material/Box';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
-import AddAlertOutlinedIcon from '@mui/icons-material/AddAlertOutlined';
-import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
-import CropOriginalOutlinedIcon from '@mui/icons-material/CropOriginalOutlined';
-import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import ColorLensOutlinedIcon from '@mui/icons-material/ColorLensOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined';
+import Icons from '../icons/Icons'
+import NoteService from '../../services/NoteService';
+const noteService = new NoteService(); 
 
 export default function NotesMaker(props) {
     const [checked, setChecked] = React.useState(false);
@@ -39,19 +38,38 @@ export default function NotesMaker(props) {
     };
     const close =() => {
         if(titleData !== "" && description !== ""){
+            var config = {
+                headers:{
+                    "Authorization" : localStorage.getItem('uid'),
+                }
+            }
             var data = {
                 "title": titleData,
                 "description": description
             }
+            noteService.addNotes('http://fundoonotes.incubation.bridgelabz.com/api/notes/addNotes', data, config)
+                .then(()=>{
+                    console.log("succesfully added note");
+                    props.func();
+                })
+                .catch((err)=>{
+                    console.log(err);
+                });
         }
         setChecked(false);
+        setTitleData("");
+        setdescription("");
+        if(document.querySelector('#title') !=="") document.querySelector('#title').value ="";
+        if(document.querySelector('#description') !=="") document.querySelector('#description').value = "";
     }
+
     const title = (
         <Box sx={{display:'flex'}}>
             <InputBase
                 placeholder="Title"
                 sx={{flexGrow:'1'}}
                 onChange={(e)=>updateTitle(e)}
+                id="title"
             />
             <IconButton><PushPinOutlinedIcon/></IconButton>
             
@@ -66,11 +84,7 @@ export default function NotesMaker(props) {
     );
     const bottom = (
         <Box sx={{display:'flex'}}>
-            <IconButton><AddAlertOutlinedIcon/></IconButton>
-            <IconButton><PersonAddAltOutlinedIcon/></IconButton>
-            <IconButton><ColorLensOutlinedIcon/></IconButton>
-            <IconButton><CropOriginalOutlinedIcon/></IconButton>
-            <IconButton><ArchiveOutlinedIcon/></IconButton>
+            <Icons/>
             <Box sx={{flexGrow:1}}></Box>
             <Button onClick={close}>Close</Button>
         </Box>
@@ -86,11 +100,12 @@ export default function NotesMaker(props) {
                             placeholder="Take a notes... "
                             sx={{flexGrow:'1', padding:'10px'}}
                             multiline
-                            maxRows={4}
+                            maxRows={50}
                             onFocus={open}
                             fullWidth
                             sx={{flexGrow:1, padding: '20px 0'}}
                             onChange={(e)=>updateDes(e)}
+                            id="description"
                         />
                         <Collapse sx={{paddingTop:'10px'}} in={!checked}>{icons}</Collapse>
                     </Box>
