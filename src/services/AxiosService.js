@@ -7,6 +7,9 @@ class AxiosService {
     PostMeth2 (url,data,config){
         return axios.post(url, data, config);
     }
+    GetMeth(url,config){
+        return axios.get(url,config);
+    }
 }
 
 export default AxiosService;
