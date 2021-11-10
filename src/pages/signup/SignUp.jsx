@@ -4,6 +4,8 @@ import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import UserService from '../../services/UserService';
+import History from '../../history/History';
+import { Link } from 'react-router-dom';
 const userService = new UserService();
 
 
@@ -25,8 +27,11 @@ export default class SignUp extends Component {
           repeatedPswError: false,
           redirect: null,
         };
-      }
+    }
 
+    goToSignIn = () => {
+        History.push('/');
+    }
     change = (e) => {
         this.setState({
             [e.target.name] : e.target.value,
@@ -65,6 +70,7 @@ export default class SignUp extends Component {
             userService.Registration("http://fundoonotes.incubation.bridgelabz.com/api/user/userSignUp", data)
                 .then(()=>{
                     console.log("sucessfully registered");
+                    History.push('/');
                 })
                 .catch ((err)=> {
                     console.log(err);
@@ -145,7 +151,7 @@ export default class SignUp extends Component {
                             <Checkbox/> Show password
                         </div>
                        <div class="buttons">
-                            <Button>Sign in instead</Button>
+                            <Button onClick={this.goToSignIn}>Sign in instead</Button>
                             <Button variant="contained" onClick={this.next}>Next</Button>
                        </div>
                     </form>

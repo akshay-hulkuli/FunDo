@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './reset.scss'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import History from '../../history/History';
 import UserService from '../../services/UserService';
 const userService = new UserService();
 
@@ -53,6 +54,7 @@ export class Reset extends Component {
             userService.Reset("http://fundoonotes.incubation.bridgelabz.com/api/user/reset-password", data, config)
                 .then(()=>{
                     console.log("sucessfully changed password");
+                    History.push('/');
                 })
                 .catch ((err)=> {
                     console.log(err);

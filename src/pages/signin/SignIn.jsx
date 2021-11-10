@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import './signin.scss'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { Link, Redirect } from 'react-router-dom';
+import History from '../../history/History';
 import UserService from '../../services/UserService';
 const userService = new UserService();
+
 
 export class SignIn extends Component {
     constructor(props) {
@@ -16,8 +19,15 @@ export class SignIn extends Component {
           emailError: false,
           redirect: null,
         };
-      }
+    }
+    
+    goToSignUp = () => {
+        History.push('/signup')
+    }
 
+    toGoForgotEmail = () => {
+        History.push('/forgotemail')
+    }
     change = (e) => {
         this.setState({
             [e.target.name] : e.target.value,
@@ -51,6 +61,8 @@ export class SignIn extends Component {
                 .then((a)=>{
                     console.log(a);
                     console.log("sucessfully logged in");
+                    localStorage.setItem('uid', a.data.id);
+                    History.push('/dashboard');
                 })
                 .catch ((err)=> {
                     console.log(err);
@@ -78,7 +90,7 @@ export class SignIn extends Component {
                         margin="dense"
                         sx={{marginTop:'40px'}}
                     />
-                    <p class="para1">Forgot email?</p>
+                    <p class="para1" onClick={this.toGoForgotEmail}>Forgot email?</p>
 
                     <TextField
                         fullWidth 
@@ -96,7 +108,7 @@ export class SignIn extends Component {
                         <a href="#">Learn more</a>
                     </div>
                     <div class="signin-buttons">
-                            <Button>Create account</Button>
+                            <Button onClick={this.goToSignUp}>Create account</Button>
                             <Button variant="contained" onClick={this.next}>Next</Button>
                     </div>
                 </form>
