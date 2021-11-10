@@ -41,11 +41,14 @@ export class Reset extends Component {
     next = () => {
         var isValidated = this.isValid();
         console.log(this.state)
+        const queryString = window.location.href;
         if(!isValidated){
             console.log("validation sucessfull");
+            const urlArray = queryString.split("/")
+            console.log(urlArray[urlArray.length-1]);
             let config = {
                 headers:{
-                    "Authorization" : "CPUhn8DMgx0VP3T3dEyc1psMI5iB57FcXO6hJCiKMI7G9RFD1hW6bOngf5FDxnLK",
+                    "Authorization" : urlArray[urlArray.length-1],
             }
             }
             let data = {
