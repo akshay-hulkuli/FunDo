@@ -2,12 +2,21 @@ import AxiosService  from "./AxiosService";
 
 const axiosService = new AxiosService();
 
-class NoteService {
-    addNotes(url, data, config){
-        return axiosService.PostMeth2(url, data, config);
+const config = {
+    headers:{
+        "Authorization" : localStorage.getItem('uid'),
     }
-    getNotes(url,config){
+}
+class NoteService {
+    
+    addNotes(url, data){
+        return axiosService.PostMeth(url, data, config);
+    }
+    getNotes(url){
         return axiosService.GetMeth(url,config);
+    }
+    updateNotes(url,data){
+        return axiosService.PostMeth(url,data, config);
     }
 }
 
