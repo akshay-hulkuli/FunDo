@@ -13,7 +13,7 @@ class UserService {
         return axiosService.PostMeth(url,data);
     }
     Reset(url, data, config){
-        return axiosService.PostMeth2(url, data, config);
+        return axiosService.PostMeth(url, data, config);
     }
 }
 
