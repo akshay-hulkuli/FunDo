@@ -16,16 +16,19 @@ const noteService = new NoteService();
 export default function Dashboard() {
   const [dataArray, setDataArray] = useState([]);
   const [editable, setEditable] = useState({});
+  const [colorTheme, setcolorTheme] = useState('dark')
   const theme = createTheme({
     palette:{
-        mode:'dark',
-        primary:{
-            main: 'rgb(239, 239, 239)',
-        }
+        mode:colorTheme,
+        color1:{
+          main:'pink[500]'
+        } 
     }
   });
 
- 
+  const onThemeChange = () => {
+    setcolorTheme(colorTheme==='dark'?'light':'dark');
+  }
 
   const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -42,14 +45,9 @@ export default function Dashboard() {
   }));
 
   const getData = () => {
-    var config = {
-      headers:{
-          "Authorization" : localStorage.getItem('uid'),
-      }
-    }
-    noteService.getNotes('http://fundoonotes.incubation.bridgelabz.com/api/notes/getNotesList', config)
+    noteService.getNotes('notes/getNotesList')
       .then((notes)=>{
-        // console.log(notes.data.data.data)
+        console.log(notes.data.data.data)
         setDataArray(notes.data.data.data);
       })
       .catch((err)=>{
@@ -76,8 +74,8 @@ export default function Dashboard() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex', backgroundColor:'#202124' }}>
-        <DashBoardHeader/>
+      <Box Box sx={{ display: 'flex'}}>
+        <DashBoardHeader onThemeChange={onThemeChange}/>
         <Box Box component="main" sx={{ flexGrow: 1, p: 3}}>
           <DrawerHeader/>
           <NotesMaker func={getData}/>
@@ -89,14 +87,10 @@ export default function Dashboard() {
               </Grid>
             ))}
           </Grid>
-          <Dialog
-            open={open}
-            onClose={handleClose} 
-          >
+          <Dialog open={open} onClose={handleClose}>
             <Box sx={{width:'600px'}}>
-              <EditNotes onClose = {handleClose} data={editable}/>
+              <EditNotes onClose = {handleClose} data={editable} updateData={getData}/>
             </Box>
-            
           </Dialog>
         </Box>
       </Box>
