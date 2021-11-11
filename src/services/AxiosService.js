@@ -1,14 +1,12 @@
 import axios from "axios";
 
+const baseUrl = "http://fundoonotes.incubation.bridgelabz.com/api/"
 class AxiosService {
-    PostMeth(url, data){
-        return axios.post(url, data);
+    PostMeth(url, data, config=false){
+        return axios.post(baseUrl+url, data, config);
     }
-    PostMeth2 (url,data,config){
-        return axios.post(url, data, config);
-    }
-    GetMeth(url,config){
-        return axios.get(url,config);
+    GetMeth(url,config=false){
+        return axios.get(baseUrl+url,config);
     }
 }
 
