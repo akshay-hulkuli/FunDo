@@ -9,16 +9,6 @@ import Icons from "../icons/Icons";
 export default function DisplayNotes(props) {
     const [checked, setChecked] = React.useState(false);
 
-    const theme = createTheme({
-        palette:{
-            mode:'dark',
-            primary:{
-                main: 'rgb(239, 239, 239)',
-                contrastText: '#e8eaed'
-            }
-        }
-    })
-
     const open = () => {
         setChecked(true);
     }
@@ -40,18 +30,26 @@ export default function DisplayNotes(props) {
         props.dialog(props.data);
     }
     return (
-        <ThemeProvider theme={theme}>
             <Box  sx={{display:'flex', flexDirection:'column'}} onMouseEnter={open} onMouseLeave={close} >
                 <Paper sx={{border:'0.1px solid', borderRadius:'8px', padding: '0 20px'}} >
-                    <Fade in={checked}>{title}</Fade>
+                    <Box sx={{display:'flex'}} onClick={handleDialog}>
+                        <div style={{fontSize:'16px', padding:'10px' }}>
+                            {props.data.title}
+                        </div>
+                        <Box sx={{flexGrow:1}}></Box>
+                        <Fade in={checked}>
+                            <IconButton><PushPinOutlinedIcon/></IconButton>
+                        </Fade>
+                        
+                    </Box>
+                    
                     <Box sx={{fontSize:'18px', padding:'5px'}} onClick={handleDialog}>
-                        <div sx={{ wordBreak: 'break-all'}} id="container">
+                        <div style={{ wordBreak: 'break-all'}} id="container">
                             {props.data.description}
                         </div>
                     </Box>
                     <Fade in={checked}>{bottom}</Fade>
                 </Paper>    
             </Box>
-        </ThemeProvider>
     )
 }
