@@ -15,16 +15,6 @@ export default function NotesMaker(props) {
     const [titleData, setTitleData] = React.useState("");
     const [description, setdescription] = React.useState("");
 
-    const theme = createTheme({
-        palette:{
-            mode:'dark',
-            primary:{
-                main: 'rgb(239, 239, 239)',
-                contrastText: '#e8eaed'
-            }
-        }
-    })
-
     const updateTitle = (e) => {
         setTitleData(e.target.value);
     }
@@ -38,16 +28,11 @@ export default function NotesMaker(props) {
     };
     const close =() => {
         if(titleData !== "" && description !== ""){
-            var config = {
-                headers:{
-                    "Authorization" : localStorage.getItem('uid'),
-                }
-            }
             var data = {
                 "title": titleData,
                 "description": description
             }
-            noteService.addNotes('http://fundoonotes.incubation.bridgelabz.com/api/notes/addNotes', data, config)
+            noteService.addNotes('notes/addNotes', data)
                 .then(()=>{
                     console.log("succesfully added note");
                     props.func();
@@ -86,12 +71,11 @@ export default function NotesMaker(props) {
         <Box sx={{display:'flex'}}>
             <Icons/>
             <Box sx={{flexGrow:1}}></Box>
-            <Button onClick={close}>Close</Button>
+            <Button color="inherit" onClick={close}>Close</Button>
         </Box>
     );
     
     return (
-        <ThemeProvider theme={theme}>
             <Box  sx={{display:'flex', flexDirection:'column' , padding: '0 20%', justifyContent:'space-between'}}>
                 <Paper sx={{padding:'10px 20px 5px 20px', borderRadius:'8px', border:'1px solid'}}>
                     <Collapse in={checked}>{title}</Collapse>
@@ -112,6 +96,5 @@ export default function NotesMaker(props) {
                     <Collapse in={checked}>{bottom}</Collapse>
                 </Paper>
             </Box>
-        </ThemeProvider>
     )
 }
