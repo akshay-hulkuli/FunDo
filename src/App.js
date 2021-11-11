@@ -14,7 +14,7 @@ function App() {
           <Route exact path="/signup" component={SignUp}></Route>
           <Route exact path="/" component={SignIn}></Route>
           <Route exact path='/forgotemail' component={ForgetEmail}></Route>
-          <Route exact path='/resetpassword' component={Reset}></Route>
+          <Route path='/resetpassword/:id' component={Reset}></Route>
           <Route exact path='/dashboard' component={Dashboard}></Route>
         </Switch>
       </Router>
