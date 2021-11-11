@@ -25,9 +25,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import ViewStreamIcon from '@mui/icons-material/ViewStream';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AppsIcon from '@mui/icons-material/Apps';
-import { computeHeadingLevel } from '@testing-library/dom';
-import { Button } from '@mui/material';
-import { dark } from '@material-ui/core/styles/createPalette';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
 
 const drawerWidth = 240;
 
@@ -69,7 +67,6 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  backgroundColor:'#202124', color:'white',
 }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -88,7 +85,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function DashBoardHeader() {
+export default function DashBoardHeader(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -134,20 +131,21 @@ export default function DashBoardHeader() {
             sx={{width:'40%', backgroundColor:'rgb(239, 239, 239)', color:'rgb(26, 26, 26)', margin:'5px 10px', borderRadius:'8px', }}
           />
           <Box sx={{ flexGrow: 1 }} />
-          <IconButton size="large" sx={{color:"white"}} ><RefreshIcon/></IconButton>
-          <IconButton size="large" sx={{color:"white"}} ><ViewStreamIcon/></IconButton>
-          <IconButton size="large" sx={{color:"white"}} ><SettingsIcon/></IconButton>
+          <IconButton size="large"  ><RefreshIcon/></IconButton>
+          <IconButton onClick={props.onThemeChange}><Brightness4Icon/></IconButton>
+          <IconButton size="large" ><ViewStreamIcon/></IconButton>
+          <IconButton size="large" ><SettingsIcon/></IconButton>
           <Box sx={{width:'2%'}}/>
-          <IconButton size="large" sx={{color:"white"}} ><AppsIcon/></IconButton>
+          <IconButton size="large" ><AppsIcon/></IconButton>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
         </DrawerHeader>
-        <List sx={{backgroundColor:'#202124', color:'white'}}>
+        <List >
         {['Notes', 'Remainder', 'Edit labels', 'Archive', 'Trash'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon sx={{color:'white'}}>
+              <ListItemIcon >
                 {index === 0 ? <LightbulbIcon /> : ""}
                 {index === 1 ? <NotificationsIcon /> : ""}
                 {index === 2 ? <CreateIcon /> : ""}
