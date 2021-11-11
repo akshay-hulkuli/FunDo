@@ -67,7 +67,7 @@ export default class SignUp extends Component {
                 "password" : this.state.password,
                 "service": "advance"
             }
-            userService.Registration("http://fundoonotes.incubation.bridgelabz.com/api/user/userSignUp", data)
+            userService.Registration("user/userSignUp", data)
                 .then(()=>{
                     console.log("sucessfully registered");
                     History.push('/');

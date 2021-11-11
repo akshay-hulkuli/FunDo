@@ -54,7 +54,7 @@ export class Reset extends Component {
             let data = {
                 "newPassword" : this.state.password
             }
-            userService.Reset("http://fundoonotes.incubation.bridgelabz.com/api/user/reset-password", data, config)
+            userService.Reset("user/reset-password", data, config)
                 .then(()=>{
                     console.log("sucessfully changed password");
                     History.push('/');

@@ -57,7 +57,7 @@ export class SignIn extends Component {
                 "email" : this.state.email,
                 "password": this.state.password
             }
-            userService.LogIn("http://fundoonotes.incubation.bridgelabz.com/api/user/login", data)
+            userService.LogIn("user/login", data)
                 .then((a)=>{
                     console.log(a);
                     console.log("sucessfully logged in");

@@ -43,7 +43,7 @@ export class ForgetEmail extends Component {
             let data = {
                 "email" : this.state.email,
             }
-            userService.ForgotEmail("http://fundoonotes.incubation.bridgelabz.com/api/user/reset", data)
+            userService.ForgotEmail("user/reset", data)
                 .then(()=>{
                     console.log("sucessfully sent reset mail");
                 })
