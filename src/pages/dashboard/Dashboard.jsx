@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react'
-import './dashboard.scss'
 import DashBoardHeader from '../../components/header/Header'
 import NotesMaker from '../../components/notemaker/NotesMaker'
 import Box from '@mui/material/Box';
