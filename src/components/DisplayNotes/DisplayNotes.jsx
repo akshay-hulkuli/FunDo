@@ -8,6 +8,7 @@ import Icons from "../icons/Icons";
 
 export default function DisplayNotes(props) {
     const [checked, setChecked] = React.useState(false);
+    const [color, setColor] = React.useState(props.data.color);
 
     const open = () => {
         setChecked(true);
@@ -22,7 +23,11 @@ export default function DisplayNotes(props) {
     );
     const bottom = (
         <Box>
-            <Icons/>
+            <Icons mode="UPDATE"
+                setColor={setColor} 
+                noteId={props.data.id}
+                getData={props.getData}
+            />
         </Box>
         
     )
@@ -31,9 +36,9 @@ export default function DisplayNotes(props) {
     }
     return (
             <Box  sx={{display:'flex', flexDirection:'column'}} onMouseEnter={open} onMouseLeave={close} >
-                <Paper sx={{border:'0.1px solid', borderRadius:'8px', padding: '0 20px'}} >
+                <Paper sx={{border:'0.1px solid', borderRadius:'8px', padding: '0 20px', backgroundColor:color}} >
                     <Box sx={{display:'flex'}} onClick={handleDialog}>
-                        <div style={{fontSize:'16px', padding:'10px' }}>
+                        <div style={{fontSize:'16px', padding:'8px'}}>
                             {props.data.title}
                         </div>
                         <Box sx={{flexGrow:1}}></Box>
@@ -44,7 +49,7 @@ export default function DisplayNotes(props) {
                     </Box>
                     
                     <Box sx={{fontSize:'18px', padding:'5px'}} onClick={handleDialog}>
-                        <div style={{ wordBreak: 'break-all'}} id="container">
+                        <div style={{ wordBreak: 'break-all', textAlign:'start'}} id="container">
                             {props.data.description}
                         </div>
                     </Box>
