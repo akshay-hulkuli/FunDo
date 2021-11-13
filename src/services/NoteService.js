@@ -18,6 +18,12 @@ class NoteService {
     updateNotes(url,data){
         return axiosService.PostMeth(url,data, config);
     }
+    updateColor(url,data){
+        return axiosService.PostMeth(url,data,config);
+    }
+    archive(url,data){
+        return axiosService.PostMeth(url,data, config);
+    }
 }
 
 export default NoteService;
