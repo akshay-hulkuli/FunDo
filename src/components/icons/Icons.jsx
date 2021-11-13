@@ -8,13 +8,12 @@ import ColorLensOutlinedIcon from '@mui/icons-material/ColorLensOutlined';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import Popover from '@mui/material/Popover';
 import CircleIcon from '@mui/icons-material/Circle';
-import Grid from '@mui/material/Grid';
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import Checkbox from '@mui/material/Checkbox';
+import NoteService from '../../services/NoteService';
 
-export default function Icons() {
+const noteService = new NoteService();
+
+export default function Icons(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
-
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -31,18 +30,96 @@ export default function Icons() {
     const handleClickOne = (event) => {
         setrootEl(event.currentTarget);
     };
-
     const handleCloseOne = () => {
         setrootEl(null);
+    };
+
+
+    const changeColor = (key) => {
+        props.setColor(key);
+        if(props.mode==="EDIT" ||"UPDATE"){
+            const data={
+                "noteIdList": [props.noteId],
+                "color":key
+            }
+            noteService.updateColor('notes/changesColorNotes', data)
+                .then(()=>{
+                    console.log("successfully changed color")
+                })
+                .catch((Err)=>{
+                    console.log(Err);
+                });
+            
+            props.getData();
+            
+        }
+    }
+
+    const changeIsArchived = () => {
+        if(props.mode==="CREATE"){
+            props.setIsArchived(true);
+            props.setCallUseEffect(!props.callUseEffect);
+        }
+        else {
+            const data={
+                "noteIdList": [props.noteId],
+                "isArchived":true
+            }
+            noteService.archive('notes/archiveNotes', data)
+                .then(()=>{
+                    console.log("successfully archived")
+                })
+                .catch((Err)=>{
+                    console.log(Err);
+                });
+            props.getData();
+            if(props.mode==="EDIT"){
+                props.onClose();
+            }
+        }
+        
+    }
+
+    const deleteNote = () => {
+        const data={
+            "noteIdList": [props.noteId],
+            "isDeleted":true
+        }
+        noteService.archive('notes/trashNotes', data)
+            .then(()=>{
+                console.log("successfully deleted")
+            })
+            .catch((Err)=>{
+                console.log(Err);
+            });
+        props.getData();
+        if(props.mode==="EDIT"){
+            props.onClose();
+        }
+    }
+
+    const extraIcons = () => {
+        if(props.mode !== "CREATE"){
+            return(
+                <div style={{display:'flex', flexDirection:'column'}}>
+                <Button color="inherit" onClick={()=> deleteNote()}>Delete Note</Button>
+                <Button color="inherit">Make a copy</Button>
+                <Button color="inherit" sx={{padding:'5px 30px'}}>Copy to funDocs</Button>
+                </div>
+            );
+        }
+        else{
+            return null;
+        }
     };
 
     const openMore = Boolean(rootEl);
     const id1 = openMore ? 'simple-popover' : undefined;
 
-    const colors = ['','#5c2b29','#614a19','#635d19','#345920','#16504b','#2d555e','#1e3a5f','#42275e','#5b2245','#442f19','#3c3f43'];
+    const colors = ['#121212','#5c2b29','#614a19','#635d19','#345920','#16504b','#2d555e','#1e3a5f','#42275e','#5b2245','#442f19','#3c3f43'];
 
     return (
-        <Box sx={{display:'flex'}}>
+        <Box sx={{display:'flex', justifyContent:'space-between'}}>
             <IconButton><AddAlertOutlinedIcon/></IconButton>
             <IconButton><PersonAddAltOutlinedIcon/></IconButton>
             <IconButton onClick={(e)=>handleClick(e)}><ColorLensOutlinedIcon/></IconButton>
@@ -62,15 +139,12 @@ export default function Icons() {
             >
                 <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)'}}>
                     {colors.map((key)=>(
-                        <Checkbox
-                            icon={<CircleIcon sx={{color:key}} />}
-                            checkedIcon={<CheckCircleIcon sx={{color:key}} />}
-                        />
+                        <IconButton sx={{color:key}} onClick={()=>changeColor(key)}><CircleIcon/></IconButton>
                     ))}
                 </div>
             </Popover>
             <IconButton><CropOriginalOutlinedIcon/></IconButton>
-            <IconButton><ArchiveOutlinedIcon/></IconButton>
+            <IconButton onClick={()=>changeIsArchived()}><ArchiveOutlinedIcon/></IconButton>
             <IconButton onClick={(e)=>handleClickOne(e)} ><MoreVertOutlinedIcon/></IconButton>
             <Popover 
                 id={id1}
@@ -87,12 +161,11 @@ export default function Icons() {
                 }}
             >
                 <Box sx={{display:'flex',flexDirection:'column'}} >
-                    <Button color="inherit" sx={{padding:'5px 30px'}}>more</Button>
-                    <Button color="inherit">Delete Note</Button>
+                    {extraIcons()}
                     <Button color="inherit">Add label</Button>
                     <Button color="inherit">Add drawing</Button>
-                    <Button color="inherit">Make a copy</Button>
                     <Button color="inherit">Show checkboxes</Button>
+                    
                 </Box>
             </Popover>
         </Box>
