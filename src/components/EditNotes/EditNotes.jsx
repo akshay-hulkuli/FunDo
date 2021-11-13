@@ -2,7 +2,6 @@ import { Button, Collapse, IconButton, InputBase, Paper } from '@mui/material';
 import React from 'react';
 import Box from '@mui/material/Box';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Icons from '../icons/Icons'
 import NoteService from '../../services/NoteService';
 const noteService = new NoteService(); 
@@ -10,11 +9,12 @@ const noteService = new NoteService();
 export default function EditNotes(props) {
     const [titleData, setTitleData] = React.useState("");
     const [description, setdescription] = React.useState("");
-
+    const [color, setColor] = React.useState("");
 
     React.useEffect(()=>{
         setTitleData(props.data.title);
         setdescription(props.data.description);
+        setColor(props.data.color);
         // console.log(props.data.);
     },[])
 
@@ -49,7 +49,7 @@ export default function EditNotes(props) {
     return (
 
             <Box  sx={{display:'flex', flexDirection:'column' , justifyContent:'space-between'}}>
-                <Paper sx={{padding:'10px 20px 5px 20px', borderRadius:'8px', border:'1px solid'}}>
+                <Paper sx={{padding:'10px 20px 5px 20px', borderRadius:'8px', border:'1px solid', backgroundColor:color}}>
                     <Box sx={{display:'flex'}}>
                         <InputBase
                             placeholder="Title"
@@ -72,7 +72,7 @@ export default function EditNotes(props) {
                         id="description"
                     />
                     <Box sx={{display:'flex'}}>
-                        <Icons/>
+                        <Icons mode="EDIT" setColor={setColor} noteId={props.data.id} getData={props.updateData} onClose={props.onClose}/>
                         <Box sx={{flexGrow:1}}></Box>
                         <Button color="inherit" onClick={close}>Close</Button>
                     </Box>
