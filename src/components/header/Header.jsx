@@ -36,6 +36,10 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: 'hidden',
+  [theme.breakpoints.down('md')]: {
+    position:'fixed',
+    zIndex:'100',
+  },
 });
 
 const closedMixin = (theme) => ({
