@@ -3,6 +3,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
 import ColorLensOutlinedIcon from '@mui/icons-material/ColorLensOutlined';
+import { styled } from '@mui/material/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined';
@@ -11,9 +12,25 @@ import NoteService from '../../services/NoteService';
 const noteService = new NoteService(); 
 
 export default function NotesMaker(props) {
+
+    const Root = styled('div')(({ theme }) => ({
+        display:'flex',
+        flexDirection:'column' , 
+        justifyContent:'space-between',
+        [theme.breakpoints.down('md')]: {
+            padding: '0',
+        },
+        [theme.breakpoints.up('md')]: {
+            padding: '0 20%',
+        },
+      }));
+
     const [checked, setChecked] = React.useState(false);
     const [titleData, setTitleData] = React.useState("");
     const [description, setdescription] = React.useState("");
+    const [color, setColor] = React.useState('#121212');
+    const [isArchived, setIsArchived] = React.useState(false);
+    const [callUseEffect, setCallUseEffect] = React.useState(false);
 
     const updateTitle = (e) => {
         setTitleData(e.target.value);
@@ -30,7 +47,9 @@ export default function NotesMaker(props) {
         if(titleData !== "" && description !== ""){
             var data = {
                 "title": titleData,
-                "description": description
+                "description": description,
+                "color": color,
+                "isArchived": isArchived
             }
             noteService.addNotes('notes/addNotes', data)
                 .then(()=>{
@@ -44,9 +63,18 @@ export default function NotesMaker(props) {
         setChecked(false);
         setTitleData("");
         setdescription("");
+        setColor("#121212");
+        setIsArchived(false);
         if(document.querySelector('#title') !=="") document.querySelector('#title').value ="";
         if(document.querySelector('#description') !=="") document.querySelector('#description').value = "";
     }
+
+
+    // whenever there is a change in state isArchived useEffect is called.
+    React.useEffect(()=>{
+        console.log("in use effect")
+        close();
+    },[callUseEffect])
 
     const title = (
         <Box sx={{display:'flex'}}>
@@ -69,15 +97,22 @@ export default function NotesMaker(props) {
     );
     const bottom = (
         <Box sx={{display:'flex'}}>
-            <Icons/>
+            <Icons mode={"CREATE"} 
+                setColor={setColor} 
+                setIsArchived={setIsArchived} 
+                close={close}
+                setCallUseEffect={setCallUseEffect}
+                callUseEffect={callUseEffect}
+            />
             <Box sx={{flexGrow:1}}></Box>
             <Button color="inherit" onClick={close}>Close</Button>
         </Box>
     );
     
     return (
-            <Box  sx={{display:'flex', flexDirection:'column' , padding: '0 20%', justifyContent:'space-between'}}>
-                <Paper sx={{padding:'10px 20px 5px 20px', borderRadius:'8px', border:'1px solid'}}>
+            // <Box  sx={{display:'flex', flexDirection:'column' , padding: '0 20%', justifyContent:'space-between'}}>
+            <Root>
+                <Paper sx={{padding:'10px 20px 5px 20px', borderRadius:'8px', border:'1px solid', backgroundColor:color}}>
                     <Collapse in={checked}>{title}</Collapse>
                     <Box sx={{display:'flex'}}>
                         <InputBase
@@ -95,6 +130,7 @@ export default function NotesMaker(props) {
                     </Box>
                     <Collapse in={checked}>{bottom}</Collapse>
                 </Paper>
-            </Box>
+                </Root>
+            // </Box>
     )
 }
