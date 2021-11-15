@@ -17,9 +17,7 @@ function App() {
           <Route exact path="/" component={SignIn}></Route>
           <Route exact path='/forgotemail' component={ForgetEmail}></Route>
           <Route path='/resetpassword/:id' component={Reset}></Route>
-          <Route exact path='/dashboard' component={Dashboard}></Route>
-          <Route exact path='/archives' component={Archives}></Route>
-          <Route exact path='/trash' component={Trash}></Route>
+          <Route path='/dashboard/' component={Dashboard}></Route>
         </Switch>
       </Router>
     </div>
