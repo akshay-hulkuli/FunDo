@@ -11,19 +11,20 @@ import Icons from '../icons/Icons'
 import NoteService from '../../services/NoteService';
 const noteService = new NoteService(); 
 
-export default function NotesMaker(props) {
 
-    const Root = styled('div')(({ theme }) => ({
-        display:'flex',
-        flexDirection:'column' , 
-        justifyContent:'space-between',
-        [theme.breakpoints.down('md')]: {
-            padding: '0',
-        },
-        [theme.breakpoints.up('md')]: {
-            padding: '0 20%',
-        },
-      }));
+const Root = styled('div')(({ theme }) => ({
+    display:'flex',
+    flexDirection:'column' , 
+    justifyContent:'space-between',
+    [theme.breakpoints.down('md')]: {
+        padding: '0',
+    },
+    [theme.breakpoints.up('md')]: {
+        padding: '0 20%',
+    },
+  }));
+
+export default function NotesMaker(props) {
 
     const [checked, setChecked] = React.useState(false);
     const [titleData, setTitleData] = React.useState("");
@@ -32,8 +33,17 @@ export default function NotesMaker(props) {
     const [isArchived, setIsArchived] = React.useState(false);
     const [callUseEffect, setCallUseEffect] = React.useState(false);
 
+    React.useEffect(()=>{
+        console.log("in use effect")
+        close();
+    },[callUseEffect])
+
+   
+
+
     const updateTitle = (e) => {
         setTitleData(e.target.value);
+        console.log(e.target.value)
     }
 
     const updateDes = (e) => {
@@ -71,17 +81,14 @@ export default function NotesMaker(props) {
 
 
     // whenever there is a change in state isArchived useEffect is called.
-    React.useEffect(()=>{
-        console.log("in use effect")
-        close();
-    },[callUseEffect])
+   
 
     const title = (
         <Box sx={{display:'flex'}}>
             <InputBase
                 placeholder="Title"
                 sx={{flexGrow:'1'}}
-                onChange={(e)=>updateTitle(e)}
+                onChange={(e)=>setTitleData(e.target.value)}
                 id="title"
             />
             <IconButton><PushPinOutlinedIcon/></IconButton>
@@ -108,8 +115,9 @@ export default function NotesMaker(props) {
             <Button color="inherit" onClick={close}>Close</Button>
         </Box>
     );
-    
+    console.log("title",description)
     return (
+      
             // <Box  sx={{display:'flex', flexDirection:'column' , padding: '0 20%', justifyContent:'space-between'}}>
             <Root>
                 <Paper sx={{padding:'10px 20px 5px 20px', borderRadius:'8px', border:'1px solid', backgroundColor:color}}>
@@ -117,13 +125,13 @@ export default function NotesMaker(props) {
                     <Box sx={{display:'flex'}}>
                         <InputBase
                             placeholder="Take a notes... "
-                            sx={{flexGrow:'1', padding:'10px'}}
+                            // sx={{flexGrow:'1', padding:'10px'}}
                             multiline
                             maxRows={50}
                             onFocus={open}
                             fullWidth
                             sx={{flexGrow:1, padding: '20px 0'}}
-                            onChange={(e)=>updateDes(e)}
+                            onChange={(e)=> setdescription(e.target.value)}
                             id="description"
                         />
                         <Collapse sx={{paddingTop:'10px'}} in={!checked}>{icons}</Collapse>
