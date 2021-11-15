@@ -67,11 +67,12 @@ export default function Icons(props) {
             noteService.archive('notes/archiveNotes', data)
                 .then(()=>{
                     console.log("successfully archived")
+                    props.getData();
                 })
                 .catch((Err)=>{
                     console.log(Err);
                 });
-            props.getData();
+            
             if(props.mode==="EDIT"){
                 props.onClose();
             }
@@ -87,11 +88,11 @@ export default function Icons(props) {
         noteService.archive('notes/trashNotes', data)
             .then(()=>{
                 console.log("successfully deleted")
+                props.getData();
             })
             .catch((Err)=>{
                 console.log(Err);
             });
-        props.getData();
         if(props.mode==="EDIT"){
             props.onClose();
         }
