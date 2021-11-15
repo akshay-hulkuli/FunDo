@@ -3,6 +3,8 @@ import SignIn from "./pages/signin/SignIn";
 import ForgetEmail from "./pages/forgotEmail/ForgotEmail";
 import Reset from "./pages/reset/Reset";
 import Dashboard from './pages/dashboard/Dashboard'
+import Trash from "./pages/trash/Trash";
+import Archives from "./pages/archives/Archives";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
@@ -10,13 +12,14 @@ function App() {
     <div className="App">
       {/* <Router history={History}> */}
       <Router >
-
         <Switch>
           <Route exact path="/signup" component={SignUp}></Route>
           <Route exact path="/" component={SignIn}></Route>
           <Route exact path='/forgotemail' component={ForgetEmail}></Route>
           <Route path='/resetpassword/:id' component={Reset}></Route>
           <Route exact path='/dashboard' component={Dashboard}></Route>
+          <Route exact path='/archives' component={Archives}></Route>
+          <Route exact path='/trash' component={Trash}></Route>
         </Switch>
       </Router>
     </div>
