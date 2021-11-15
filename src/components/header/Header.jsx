@@ -26,6 +26,7 @@ import ViewStreamIcon from '@mui/icons-material/ViewStream';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AppsIcon from '@mui/icons-material/Apps';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
+import { useHistory } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -92,6 +93,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function DashBoardHeader(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const history = useHistory();
+
 
   const drawerToggle = () => {
     setOpen(!open);
@@ -100,6 +103,16 @@ export default function DashBoardHeader(props) {
   const clearSearch = () => {
     var elem = document.querySelector('#search')
     elem.value= "";
+  }
+
+  const handleRouting = (key) => {
+    switch(key){
+      case "Notes" : history.push('/dashboard'); break;
+      case"Remainder": break;
+      case "Edit labels": break;
+      case "Archive": history.push('/archives'); break;
+      case "Trash": history.push('/trash'); break;
+    }
   }
 
   return (
@@ -148,7 +161,7 @@ export default function DashBoardHeader(props) {
         </DrawerHeader>
         <List >
         {['Notes', 'Remainder', 'Edit labels', 'Archive', 'Trash'].map((text, index) => (
-            <ListItem button key={text}>
+            <ListItem button key={text} onClick={()=> handleRouting(text)}>
               <ListItemIcon >
                 {index === 0 ? <LightbulbIcon /> : ""}
                 {index === 1 ? <NotificationsIcon /> : ""}
