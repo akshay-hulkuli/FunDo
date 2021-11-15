@@ -3,13 +3,14 @@ import SignIn from "./pages/signin/SignIn";
 import ForgetEmail from "./pages/forgotEmail/ForgotEmail";
 import Reset from "./pages/reset/Reset";
 import Dashboard from './pages/dashboard/Dashboard'
-import { Router, Route, Switch } from 'react-router-dom';
-import History from './history/History';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-      <Router history={History}>
+      {/* <Router history={History}> */}
+      <Router >
+
         <Switch>
           <Route exact path="/signup" component={SignUp}></Route>
           <Route exact path="/" component={SignIn}></Route>
