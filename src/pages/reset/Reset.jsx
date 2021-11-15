@@ -57,7 +57,7 @@ export class Reset extends Component {
             userService.Reset("user/reset-password", data, config)
                 .then(()=>{
                     console.log("sucessfully changed password");
-                    History.push('/');
+                    this.props.history.push('/');
                 })
                 .catch ((err)=> {
                     console.log(err);

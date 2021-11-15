@@ -30,7 +30,7 @@ export default class SignUp extends Component {
     }
 
     goToSignIn = () => {
-        History.push('/');
+        this.props.history.push('/');
     }
     change = (e) => {
         this.setState({

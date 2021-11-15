@@ -3,7 +3,6 @@ import './signin.scss'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Link, Redirect } from 'react-router-dom';
-import History from '../../history/History';
 import UserService from '../../services/UserService';
 const userService = new UserService();
 
@@ -22,11 +21,11 @@ export class SignIn extends Component {
     }
     
     goToSignUp = () => {
-        History.push('/signup')
+        this.props.history.push('/signup')
     }
 
     toGoForgotEmail = () => {
-        History.push('/forgotemail')
+        this.props.history.push('/forgotemail')
     }
     change = (e) => {
         this.setState({
@@ -62,7 +61,7 @@ export class SignIn extends Component {
                     console.log(a);
                     console.log("sucessfully logged in");
                     localStorage.setItem('uid', a.data.id);
-                    History.push('/dashboard');
+                    this.props.history.push('/dashboard');
                 })
                 .catch ((err)=> {
                     console.log(err);
