@@ -110,8 +110,8 @@ export default function DashBoardHeader(props) {
       case "Notes" : history.push('/dashboard'); break;
       case"Remainder": break;
       case "Edit labels": break;
-      case "Archive": history.push('/archives'); break;
-      case "Trash": history.push('/trash'); break;
+      case "Archive": history.push('/dashboard/archive'); break;
+      case "Trash": history.push('/dashboard/trash'); break;
     }
   }
 
