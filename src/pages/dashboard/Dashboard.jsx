@@ -1,20 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react'
 import DashBoardHeader from '../../components/header/Header'
-import NotesMaker from '../../components/notemaker/NotesMaker'
 import Box from '@mui/material/Box';
-import { styled, useTheme, createTheme,ThemeProvider } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
+import NotesMaker from '../../components/notemaker/NotesMaker'
 import DisplayNotes from '../../components/DisplayNotes/DisplayNotes';
 import Dialog from "@mui/material/Dialog";
-import NoteService from '../../services/NoteService';
 import EditNotes from '../../components/EditNotes/EditNotes';
+import Grid from '@mui/material/Grid';
+import NoteService from '../../services/NoteService';
+import Paper from '@mui/material/Paper';
+import { styled, useTheme, createTheme,ThemeProvider } from '@mui/material/styles';
 const noteService = new NoteService();
 
 export default function Dashboard() {
+  const [colorTheme, setcolorTheme] = useState('dark');
   const [dataArray, setDataArray] = useState([]);
-  const [editable, setEditable] = useState({});
-  const [colorTheme, setcolorTheme] = useState('dark')
+    const [editable, setEditable] = useState({});
   const theme = createTheme({
     palette:{
         mode:colorTheme,
@@ -36,6 +36,7 @@ export default function Dashboard() {
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   }));
+
   const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     textAlign: 'center',
@@ -69,7 +70,6 @@ export default function Dashboard() {
     setOpen(false);
   };
 
-
   return (
     <ThemeProvider theme={theme}>
       <Box Box sx={{ display: 'flex'}}>
@@ -89,8 +89,8 @@ export default function Dashboard() {
             <Box sx={{width:'600px'}}>
               <EditNotes onClose = {handleClose} data={editable} updateData={getData}/>
             </Box>
-          </Dialog>
-        </Box>
+            </Dialog>
+        </Box> 
       </Box>
     </ThemeProvider>
   )
