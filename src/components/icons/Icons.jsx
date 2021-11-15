@@ -37,7 +37,7 @@ export default function Icons(props) {
 
     const changeColor = (key) => {
         props.setColor(key);
-        if(props.mode==="EDIT" ||"UPDATE"){
+        if(props.mode === ("EDIT" ||"UPDATE")){
             const data={
                 "noteIdList": [props.noteId],
                 "color":key
@@ -45,13 +45,12 @@ export default function Icons(props) {
             noteService.updateColor('notes/changesColorNotes', data)
                 .then(()=>{
                     console.log("successfully changed color")
+                    props.getData();
                 })
                 .catch((Err)=>{
                     console.log(Err);
                 });
-            
-            props.getData();
-            
+          
         }
     }
 
