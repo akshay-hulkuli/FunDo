@@ -5,6 +5,8 @@ import Fade from '@mui/material/Fade';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Icons from "../icons/Icons";
+import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 export default function DisplayNotes(props) {
     const [checked, setChecked] = React.useState(false);
@@ -21,16 +23,26 @@ export default function DisplayNotes(props) {
             <IconButton><PushPinOutlinedIcon/></IconButton>
         </Box>
     );
-    const bottom = (
-        <Box>
-            <Icons mode="UPDATE"
-                setColor={setColor} 
-                noteId={props.data.id}
-                getData={props.getData}
-            />
-        </Box>
+    const bottom = () =>  {
+        if(props.data.isDeleted !== true){
+            return (
+                <Box>
+                    <Icons mode="UPDATE"
+                        setColor={setColor} 
+                        noteId={props.data.id}
+                        getData={props.getData}
+                    />
+                </Box>
+            )
+        }
+        else return (
+            <Box>
+                <IconButton><RestoreFromTrashIcon/></IconButton>
+                <IconButton><DeleteForeverIcon/></IconButton>
+            </Box>
+        )
         
-    )
+    }
     const handleDialog = () => {
         props.dialog(props.data);
     }
@@ -53,7 +65,7 @@ export default function DisplayNotes(props) {
                             {props.data.description}
                         </div>
                     </Box>
-                    <Fade in={checked}>{bottom}</Fade>
+                    <Fade in={checked}>{bottom()}</Fade>
                 </Paper>    
             </Box>
     )
