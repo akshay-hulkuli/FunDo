@@ -61,6 +61,9 @@ export class SignIn extends Component {
                     console.log(a);
                     console.log("sucessfully logged in");
                     localStorage.setItem('uid', a.data.id);
+                    localStorage.setItem('email',a.data.email);
+                    localStorage.setItem('firstName',a.data.firstName);
+                    localStorage.setItem('lastName',a.data.lastName);
                     this.props.history.push('/dashboard');
                 })
                 .catch ((err)=> {
