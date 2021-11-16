@@ -2,6 +2,12 @@ import AxiosService  from "./AxiosService";
 
 const axiosService = new AxiosService();
 
+const uconfig = {
+    headers:{
+        "Authorization" : localStorage.getItem('uid'),
+    }
+}
+
 class UserService {
     Registration (url, data){
         return axiosService.PostMeth(url,data);
@@ -14,6 +20,9 @@ class UserService {
     }
     Reset(url, data, config){
         return axiosService.PostMeth(url, data, config);
+    }
+    SearchUser(url,data){
+        return axiosService.PostMeth(url,data,uconfig);
     }
 }
 
