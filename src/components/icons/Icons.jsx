@@ -9,6 +9,8 @@ import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import Popover from '@mui/material/Popover';
 import CircleIcon from '@mui/icons-material/Circle';
 import NoteService from '../../services/NoteService';
+import Dialog from "@mui/material/Dialog";
+import Collaborators from '../Collaborators/Collaborators'
 
 const noteService = new NoteService();
 
@@ -34,6 +36,19 @@ export default function Icons(props) {
         setrootEl(null);
     };
 
+    const openMore = Boolean(rootEl);
+    const id1 = openMore ? 'simple-popover' : undefined;
+
+
+    const [openColab, setOpenColab] = React.useState(false);
+    
+    const handleClickOpenColab = () => {
+        setOpenColab(true);
+    };
+    
+    const handleCloseColab = () => {
+        setOpenColab(false);
+    };
 
     const changeColor = (key) => {
         props.setColor(key);
@@ -113,15 +128,19 @@ export default function Icons(props) {
         }
     };
 
-    const openMore = Boolean(rootEl);
-    const id1 = openMore ? 'simple-popover' : undefined;
+    
 
     const colors = ['#121212','#5c2b29','#614a19','#635d19','#345920','#16504b','#2d555e','#1e3a5f','#42275e','#5b2245','#442f19','#3c3f43'];
 
     return (
         <Box sx={{display:'flex', justifyContent:'space-between'}}>
             <IconButton><AddAlertOutlinedIcon/></IconButton>
-            <IconButton><PersonAddAltOutlinedIcon/></IconButton>
+            <IconButton onClick={handleClickOpenColab}><PersonAddAltOutlinedIcon/></IconButton>
+            <Dialog open={openColab} onClose={handleCloseColab}>
+                <Box sx={{width:'600px'}}>
+                    <Collaborators handleDialogClose={handleCloseColab}/>
+                </Box>
+            </Dialog>
             <IconButton onClick={(e)=>handleClick(e)}><ColorLensOutlinedIcon/></IconButton>
             <Popover 
                 id={id}
