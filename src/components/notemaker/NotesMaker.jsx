@@ -1,4 +1,4 @@
-import { Button, Collapse, IconButton, InputBase, Paper } from '@mui/material';
+import { Button, Collapse, IconButton, InputBase, Paper, Typography } from '@mui/material';
 import React from 'react';
 import Box from '@mui/material/Box';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
@@ -11,6 +11,14 @@ import Icons from '../icons/Icons'
 import NoteService from '../../services/NoteService';
 const noteService = new NoteService(); 
 
+const ProfileImg = styled('div')(({theme})=>({
+    height:'40px',
+    width:'40px',
+    borderRadius: '50px',
+    backgroundColor: 'red',
+    textAlign: 'center',
+    margin: '8px 5px'
+}))
 
 const Root = styled('div')(({ theme }) => ({
     display:'flex',
@@ -32,13 +40,12 @@ export default function NotesMaker(props) {
     const [color, setColor] = React.useState('#121212');
     const [isArchived, setIsArchived] = React.useState(false);
     const [callUseEffect, setCallUseEffect] = React.useState(false);
+    const [collaborators, setCollaborators] = React.useState([]);
 
     React.useEffect(()=>{
         console.log("in use effect")
         close();
     },[callUseEffect])
-
-   
 
 
     const updateTitle = (e) => {
@@ -55,15 +62,25 @@ export default function NotesMaker(props) {
     };
     const close =() => {
         if(titleData !== "" && description !== ""){
-            var data = {
-                "title": titleData,
-                "description": description,
-                "color": color,
-                "isArchived": isArchived
-            }
+            // var data = {
+            //     "title": titleData,
+            //     "description": description,
+            //     "color": color,
+            //     "isArchived": isArchived,
+            //     "collaberators":JSON.stringify([collaborators])
+            // }
+
+            var data = new FormData();
+            data.append('title',titleData);
+            data.append('description', description);
+            data.append('color', color);
+            data.append('isArchived',isArchived);
+            data.append('collaberators',JSON.stringify(collaborators));
+            console.log(collaborators);
             noteService.addNotes('notes/addNotes', data)
                 .then(()=>{
                     console.log("succesfully added note");
+                    console.log(collaborators)
                     props.func();
                 })
                 .catch((err)=>{
@@ -75,6 +92,7 @@ export default function NotesMaker(props) {
         setdescription("");
         setColor("#121212");
         setIsArchived(false);
+        setCollaborators([]);
         if(document.querySelector('#title') !=="") document.querySelector('#title').value ="";
         if(document.querySelector('#description') !=="") document.querySelector('#description').value = "";
     }
@@ -110,11 +128,25 @@ export default function NotesMaker(props) {
                 close={close}
                 setCallUseEffect={setCallUseEffect}
                 callUseEffect={callUseEffect}
+                setCollaborators={setCollaborators}
             />
             <Box sx={{flexGrow:1}}></Box>
             <Button color="inherit" onClick={close}>Close</Button>
         </Box>
     );
+
+    const collaboratorsIcons = () => {
+        if(collaborators.length === 0) return null;
+        else {
+            return (
+                collaborators.map((key)=>(
+                    <ProfileImg>
+                        <Typography sx={{fontSize:'24px'}}>{key.firstName.charAt(0)}</Typography>
+                    </ProfileImg>
+                ))
+            );
+        }
+    }
     console.log("title",description)
     return (
       
@@ -135,6 +167,9 @@ export default function NotesMaker(props) {
                             id="description"
                         />
                         <Collapse sx={{paddingTop:'10px'}} in={!checked}>{icons}</Collapse>
+                    </Box>
+                    <Box sx={{display:'flex'}}>
+                        {collaboratorsIcons()}
                     </Box>
                     <Collapse in={checked}>{bottom}</Collapse>
                 </Paper>
