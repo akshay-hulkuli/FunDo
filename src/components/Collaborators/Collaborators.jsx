@@ -3,8 +3,10 @@ import { Box, fontWeight, styled } from '@mui/system'
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import React from 'react'
 import UserService from '../../services/UserService';
+import NoteService from '../../services/NoteService';
 
 const userService = new UserService();
+const noteService = new NoteService();
 
 const ProfileImg = styled('div')(({theme})=>({
     height:'40px',
@@ -18,15 +20,14 @@ const ProfileImg = styled('div')(({theme})=>({
 export default function Collaborators(props) {
     const [userArray, setUserArray] = React.useState([]);
     const [searchedUser, setSearchedUser] = React.useState([]);
+    const [myset, setMySet] = React.useState(new Set());
 
-    // React.useEffect(()=>{
-    //     const data = {
-    //         "firstName": localStorage.getItem('firstName'),
-    //         "lastName": localStorage.getItem('lastName'),
-    //         "email": localStorage.getItem('email')
-    //     };
-    //     setUserArray(...userArray,data);
-    // },[])
+    React.useEffect(()=>{
+        if(props.mode==='EDIT' || props.mode ==="UPDATE"){
+        setUserArray(...userArray,props.data.collaborators );
+        }
+        // console.log(props.data)
+    },[])
 
     const [rootEl, setrootEl] = React.useState(null);
 
@@ -60,8 +61,37 @@ export default function Collaborators(props) {
     }
 
     const addUser = (key) => {
-        setUserArray([...userArray,key]);
+        if(!myset.has(key.email)){
+            setMySet(prev => new Set(prev.add(key.email)))
+            setUserArray([...userArray,key]);
+        }
         handlePopoverClose();
+    }
+
+    const onSave = () => {
+        if(props.mode==='EDIT' || props.mode==='UPDATE'){
+            const url = "notes/"+props.noteId+"/AddcollaboratorsNotes";
+            // const data = {
+            //     "collaborators": JSON.stringify(userArray),
+            // }
+            userArray.map((user)=>{
+                noteService.addCollaborators(url,user)
+                .then(()=>{
+                    console.log("successfully added collaborators");
+                    props.getData();
+                    props.handleDialogClose();
+                    if(props.mode==='EDIT') props.onClose();
+                })
+                .catch((err)=>{
+                    console.log(err);
+                })
+            })
+        }
+        else{
+            props.setCollaborators(userArray);  
+            console.log('hello')
+            props.handleDialogClose();
+        }
     }
     return (
         <Box sx={{display:'flex', flexDirection:'column', padding:'5px 10px'}}> 
@@ -125,7 +155,7 @@ export default function Collaborators(props) {
             <Box sx={{display:'flex', padding:'10px'}}>
                 <Box sx={{flexGrow:1}}/>
                 <Button onClick={props.handleDialogClose} sx={{color:'white'}}>Cancel</Button>
-                <Button sx={{color:'white'}}>Save</Button>
+                <Button onClick = {onSave} sx={{color:'white'}}>Save</Button>
             </Box>
         </Box>
     )
