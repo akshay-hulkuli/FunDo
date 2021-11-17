@@ -138,7 +138,15 @@ export default function Icons(props) {
             <IconButton onClick={handleClickOpenColab}><PersonAddAltOutlinedIcon/></IconButton>
             <Dialog open={openColab} onClose={handleCloseColab}>
                 <Box sx={{width:'600px'}}>
-                    <Collaborators handleDialogClose={handleCloseColab}/>
+                    <Collaborators 
+                        handleDialogClose={handleCloseColab} 
+                        noteId={props.noteId} 
+                        mode={props.mode} 
+                        setCollaborators={props.mode==='CREATE'?props.setCollaborators:null}
+                        data= {props.data}
+                        getData ={props.getData}
+                        onClose={props.mode==='EDIT'?props.onClose:null}
+                    />
                 </Box>
             </Dialog>
             <IconButton onClick={(e)=>handleClick(e)}><ColorLensOutlinedIcon/></IconButton>
