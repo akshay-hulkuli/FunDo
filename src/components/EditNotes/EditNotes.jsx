@@ -1,10 +1,20 @@
-import { Button, Collapse, IconButton, InputBase, Paper } from '@mui/material';
+import { Button, Collapse, IconButton, InputBase, Paper, Typography } from '@mui/material';
 import React from 'react';
 import Box from '@mui/material/Box';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
+import {styled } from '@mui/material/styles';
 import Icons from '../icons/Icons'
 import NoteService from '../../services/NoteService';
 const noteService = new NoteService(); 
+
+const ProfileImg = styled('div')(({theme})=>({
+    height:'30px',
+    width:'30px',
+    borderRadius: '50px',
+    backgroundColor: 'orange',
+    textAlign: 'center',
+    margin: '8px 5px 8px 5px'
+}))
 
 export default function EditNotes(props) {
     const [titleData, setTitleData] = React.useState("");
@@ -45,6 +55,19 @@ export default function EditNotes(props) {
         }
         props.onClose();
     }
+
+    const collaboratorsIcons = () => {
+        if(props.data.collaborators.length === 0) return null;
+        else {
+            return (
+                props.data.collaborators.map((key)=>(
+                    <ProfileImg>
+                        <Typography sx={{fontSize:'18px', paddingTop:'1px'}}>{key.firstName.charAt(0)}</Typography>
+                    </ProfileImg>
+                ))
+            );
+        }
+    }
     
     return (
 
@@ -72,7 +95,10 @@ export default function EditNotes(props) {
                         id="description"
                     />
                     <Box sx={{display:'flex'}}>
-                        <Icons mode="EDIT" setColor={setColor} noteId={props.data.id} getData={props.updateData} onClose={props.onClose}/>
+                        {collaboratorsIcons()}
+                    </Box>
+                    <Box sx={{display:'flex'}}>
+                        <Icons mode="EDIT" setColor={setColor} noteId={props.data.id} data={props.data} getData={props.updateData} onClose={props.onClose}/>
                         <Box sx={{flexGrow:1}}></Box>
                         <Button color="inherit" onClick={close}>Close</Button>
                     </Box>
