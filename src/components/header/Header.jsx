@@ -27,6 +27,8 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import AppsIcon from '@mui/icons-material/Apps';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { useHistory } from 'react-router-dom';
+import { Dialog, Popover } from '@mui/material';
+import Logout from '../logout/Logout';
 
 const drawerWidth = 240;
 
@@ -90,6 +92,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+const ProfileImg = styled('div')(({theme})=>({
+  height:'40px',
+  width:'40px',
+  borderRadius: '50px',
+  backgroundColor: 'darkgreen',
+  textAlign: 'center',
+  margin: '8px 0',
+  cursor:'pointer'
+}))
+
 export default function DashBoardHeader(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -114,6 +126,19 @@ export default function DashBoardHeader(props) {
       case "Trash": history.push('/dashboard/trash'); break;
     }
   }
+
+   
+  const [rootEl, setrootEl] = React.useState(null);
+
+  const handleClickOne = (event) => {
+      setrootEl(event.currentTarget);
+  };
+  const handleCloseOne = () => {
+      setrootEl(null);
+  };
+
+  const openMore = Boolean(rootEl);
+  const id1 = openMore ? 'simple-popover' : undefined;
 
   return (
     <div>
@@ -154,6 +179,25 @@ export default function DashBoardHeader(props) {
           <IconButton size="large" ><SettingsIcon/></IconButton>
           <Box sx={{width:'2%'}}/>
           <IconButton size="large" ><AppsIcon/></IconButton>
+          <ProfileImg onClick={handleClickOne}>
+            <Typography sx={{fontSize:'20px', paddingTop:'5px'}}>{localStorage.getItem('firstName').charAt(0)}</Typography>
+          </ProfileImg>
+          <Popover 
+                id={id1}
+                open={openMore}
+                anchorEl={rootEl}
+                onClose={handleCloseOne}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+            >
+              <Logout/>
+            </Popover>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
