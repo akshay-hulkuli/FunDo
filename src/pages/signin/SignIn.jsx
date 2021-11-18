@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Link, Redirect } from 'react-router-dom';
 import UserService from '../../services/UserService';
+import auth from '../../protectedRoute/Auth';
 const userService = new UserService();
 
 
@@ -60,11 +61,13 @@ export class SignIn extends Component {
                 .then((a)=>{
                     console.log(a);
                     console.log("sucessfully logged in");
-                    localStorage.setItem('uid', a.data.id);
-                    localStorage.setItem('email',a.data.email);
-                    localStorage.setItem('firstName',a.data.firstName);
-                    localStorage.setItem('lastName',a.data.lastName);
-                    this.props.history.push('/dashboard');
+                    auth.login(()=> {
+                        localStorage.setItem('uid', a.data.id);
+                        localStorage.setItem('email',a.data.email);
+                        localStorage.setItem('firstName',a.data.firstName);
+                        localStorage.setItem('lastName',a.data.lastName);
+                        this.props.history.push('/dashboard');
+                    });
                 })
                 .catch ((err)=> {
                     console.log(err);
