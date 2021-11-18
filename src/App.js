@@ -5,6 +5,7 @@ import Reset from "./pages/reset/Reset";
 import Dashboard from './pages/dashboard/Dashboard'
 import Trash from "./pages/trash/Trash";
 import Archives from "./pages/archives/Archives";
+import { ProtectedRoute } from "./protectedRoute/ProtectedRoute";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
           <Route exact path="/" component={SignIn}></Route>
           <Route exact path='/forgotemail' component={ForgetEmail}></Route>
           <Route path='/resetpassword/:id' component={Reset}></Route>
-          <Route path='/dashboard/' component={Dashboard}></Route>
+          <ProtectedRoute path='/dashboard/' component={Dashboard}></ProtectedRoute>
         </Switch>
       </Router>
     </div>
