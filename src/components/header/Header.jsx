@@ -103,10 +103,15 @@ const ProfileImg = styled('div')(({theme})=>({
 }))
 
 export default function DashBoardHeader(props) {
+  
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const history = useHistory();
 
+  const onSearch = (e) => {
+    var filteredData = props.backup.filter((note) => (note.description.includes(e.target.value) || note.title.includes(e.target.value)));
+    props.setDataArray(filteredData);
+  }
 
   const drawerToggle = () => {
     setOpen(!open);
@@ -115,6 +120,7 @@ export default function DashBoardHeader(props) {
   const clearSearch = () => {
     var elem = document.querySelector('#search')
     elem.value= "";
+    props.setDataArray(props.backup);
   }
 
   const handleRouting = (key) => {
@@ -167,6 +173,7 @@ export default function DashBoardHeader(props) {
             startAdornment={<InputAdornment position="start"><IconButton sx={{color:'rgb(26, 26, 26)'}}><SearchIcon/></IconButton></InputAdornment>}
             endAdornment={<InputAdornment position="end" sx={{color:'rgb(26, 26, 26)'}}><ClearIcon onClick={clearSearch} sx={{cursor:'pointer'}}/></InputAdornment>}
             aria-describedby="outlined-weight-helper-text"
+            onChange={(e)=>onSearch(e)}
             inputProps={{
               'aria-label': 'weight',
             }}
