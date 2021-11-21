@@ -10,8 +10,8 @@ import Paper from '@mui/material/Paper';
 import { styled, useTheme, createTheme,ThemeProvider } from '@mui/material/styles';
 const noteService = new NoteService();
 
-export default function Home() {
-    const [dataArray, setDataArray] = useState([]);
+export default function Home(props) {
+    // const [dataArray, setDataArray] = useState([]);
     const [editable, setEditable] = useState({});
     const Item = styled(Paper)(({ theme }) => ({
         ...theme.typography.body2,
@@ -23,7 +23,8 @@ export default function Home() {
         noteService.getNotes('notes/getNotesList')
         .then((notes)=>{
             console.log(notes.data.data.data)
-            setDataArray(notes.data.data.data);
+            props.setDataArray(notes.data.data.data);
+            props.callBackUp(notes.data.data.data);
         })
         .catch((err)=>{
             console.log(err);
@@ -50,7 +51,7 @@ export default function Home() {
             <NotesMaker func={getData}/>
             <Box sx={{paddingTop:'5%'}}/>
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} rowSpacing={{md:10, xs: 3}}>
-            {dataArray.filter(data => data.isArchived===false && data.isDeleted === false).map((data)=>(
+            {props.dataArray.filter(data => data.isArchived===false && data.isDeleted === false).map((data)=>(
                 <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
                 <Item><DisplayNotes data={data} dialog={handleClickOpen} getData={getData}/></Item>
                 </Grid>
